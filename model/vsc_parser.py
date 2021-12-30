@@ -118,6 +118,8 @@ class Namespace(AST):
 class Service(AST):
    name: str
    description: str
+   major_version: int
+   minor_version: int
    namespaces: list[Namespace]
 
 # ----------------------------------------------------------------------------
@@ -414,6 +416,10 @@ def ast_Service(parent, yamltree) -> Service:
     # that are expected in a valid file
     # So for a  service we expect datatypes and interfaces as children:
     node.description = get_yaml_value(yamltree, 'description')
+
+    node.major_version = get_yaml_value(yamltree, 'major-version')
+    node.minor_version = get_yaml_value(yamltree, 'minor-version')
+
     node.namespaces = ast_Namespaces(node, yamltree)
 
     return node
